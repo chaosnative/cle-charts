@@ -1,7 +1,7 @@
 apiVersion: v1
 appVersion: "0.1.0"
 description: A Helm chart to install ChaosNative Litmus Enterprise
-name: ChaosNative Litmus Enterprise
+name: cle
 version: 0.1.0
 kubeVersion: ">=1.16.0-0"
 home: https://chaosnative.com
