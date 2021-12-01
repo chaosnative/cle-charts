@@ -42,5 +42,5 @@ jobs:
         with:
           cmd: yq eval '.version' 'cle/Chart.yaml'
 
-      - name: Push helm package to s3
-        run: HELM_S3_MODE=3 helm s3 push --relative ./cle-${{ steps.c_version.outputs.result }}.tgz chaosnative --force
+#      - name: Push helm package to s3
+#        run: HELM_S3_MODE=3 helm s3 push --relative ./cle-${{ steps.c_version.outputs.result }}.tgz chaosnative --force
