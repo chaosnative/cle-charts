@@ -2,14 +2,14 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: argo-crb-for-{{ include "litmus-portal.fullname" . }}-server
+  name: argo-crb-for-{{ include "cle.fullname" . }}-server
   labels:
-    app.kubernetes.io/component: argo-crb-for-{{ include "litmus-portal.name" . }}-server
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: argo-crb-for-{{ include "cle.name" . }}-server
+    {{- include "cle.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: argo-cr-for-{{ include "litmus-portal.fullname" . }}-server
+  name: argo-cr-for-{{ include "cle.fullname" . }}-server
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.portal.server.serviceAccountName }}
@@ -18,7 +18,7 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: litmus-cluster-scope-crb-for-{{ include "litmus-portal.fullname" . }}-server
+  name: litmus-cluster-scope-crb-for-{{ include "cle.fullname" . }}-server
   labels:
     app.kubernetes.io/name: litmus
     # provide unique instance-id if applicable
@@ -30,7 +30,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: litmus-cluster-scope-for-{{ include "litmus-portal.fullname" . }}-server
+  name: litmus-cluster-scope-for-{{ include "cle.fullname" . }}-server
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.portal.server.serviceAccountName }}
@@ -39,15 +39,15 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: litmus-admin-crb-for-{{ include "litmus-portal.fullname" . }}-server
+  name: litmus-admin-crb-for-{{ include "cle.fullname" . }}-server
   labels:
-    name: litmus-admin-crb-for-{{ include "litmus-portal.name" . }}-server
-    app.kubernetes.io/component: litmus-admin-crb-for-{{ include "litmus-portal.name" . }}-server
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    name: litmus-admin-crb-for-{{ include "cle.name" . }}-server
+    app.kubernetes.io/component: litmus-admin-crb-for-{{ include "cle.name" . }}-server
+    {{- include "cle.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: litmus-admin-cr-for-{{ include "litmus-portal.fullname" . }}-server
+  name: litmus-admin-cr-for-{{ include "cle.fullname" . }}-server
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.portal.server.serviceAccountName }}
@@ -56,14 +56,14 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: chaos-crb-for-{{ include "litmus-portal.fullname" . }}-server
+  name: chaos-crb-for-{{ include "cle.fullname" . }}-server
   labels:
-    app.kubernetes.io/component: chaos-crb-for-{{ include "litmus-portal.name" . }}-server
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: chaos-crb-for-{{ include "cle.name" . }}-server
+    {{- include "cle.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: chaos-cr-for-{{ include "litmus-portal.fullname" . }}-server
+  name: chaos-cr-for-{{ include "cle.fullname" . }}-server
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.portal.server.serviceAccountName }}
@@ -72,30 +72,30 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: subscriber-crb-for-{{ include "litmus-portal.fullname" . }}-server
+  name: subscriber-crb-for-{{ include "cle.fullname" . }}-server
   labels:
-    app.kubernetes.io/component: subscriber-crb-for-{{ include "litmus-portal.name" . }}-server
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: subscriber-crb-for-{{ include "cle.name" . }}-server
+    {{- include "cle.labels" . | nindent 4 }}
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.portal.server.serviceAccountName }}
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: subscriber-cr-for-{{ include "litmus-portal.fullname" . }}-server
+  name: subscriber-cr-for-{{ include "cle.fullname" . }}-server
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: event-tracker-crb-for-{{ include "litmus-portal.fullname" . }}-server
+  name: event-tracker-crb-for-{{ include "cle.fullname" . }}-server
   labels:
-    app.kubernetes.io/component: event-tracker-crb-for-{{ include "litmus-portal.name" . }}-server
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: event-tracker-crb-for-{{ include "cle.name" . }}-server
+    {{- include "cle.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: event-tracker-cr-for-{{ include "litmus-portal.fullname" . }}-server
+  name: event-tracker-cr-for-{{ include "cle.fullname" . }}-server
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.portal.server.serviceAccountName }}
@@ -104,14 +104,14 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: litmus-server-crb-for-{{ include "litmus-portal.fullname" . }}-server
+  name: litmus-server-crb-for-{{ include "cle.fullname" . }}-server
   labels:
-    app.kubernetes.io/component: litmus-server-crb-for-{{ include "litmus-portal.name" . }}-server
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: litmus-server-crb-for-{{ include "cle.name" . }}-server
+    {{- include "cle.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: litmus-server-cr-for-{{ include "litmus-portal.fullname" . }}-server
+  name: litmus-server-cr-for-{{ include "cle.fullname" . }}-server
 subjects:
   - kind: ServiceAccount
     name: {{ .Values.portal.server.serviceAccountName }}

@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "litmus-portal.fullname" . }}-frontend
+  name: {{ include "cle.fullname" . }}-frontend
   namespace:  {{ .Release.Namespace }}
   labels:
-    app.kubernetes.io/component: {{ include "litmus-portal.name" . }}-frontend
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "cle.name" . }}-frontend
+    {{- include "cle.labels" . | nindent 4 }}
     {{- if .Values.portal.frontend.customLabels }}
       {{ toYaml .Values.portal.frontend.customLabels | nindent 4 }}
     {{- end }}
@@ -17,24 +17,24 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      app.kubernetes.io/component: {{ include "litmus-portal.name" . }}-frontend
+      app.kubernetes.io/component: {{ include "cle.name" . }}-frontend
   template:
     metadata:
       labels:
-        app.kubernetes.io/component: {{ include "litmus-portal.name" . }}-frontend
-        {{- include "litmus-portal.labels" . | nindent 8 }}
+        app.kubernetes.io/component: {{ include "cle.name" . }}-frontend
+        {{- include "cle.labels" . | nindent 8 }}
         {{- if .Values.portal.frontend.customLabels }}
           {{ toYaml .Values.portal.frontend.customLabels | nindent 8 }}
         {{- end }}
     spec:
-      {{- if .Values.image.imagePullSecrets }}
+    {{- with .Values.image.imagePullSecrets }}
       imagePullSecrets:
-        {{ toYaml .Values.image.imagePullSecrets | indent 8 }}
-      {{- end }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
       volumes:
         - name: nginx-config
           configMap:
-            name: {{ include "litmus-portal.fullname" . }}-frontend-nginx-configuration
+            name: {{ include "cle.fullname" . }}-frontend-nginx-configuration
       containers:
         - name: litmusportal-frontend
           image: {{ .Values.image.imageRegistryName }}/{{ .Values.portal.frontend.image.repository }}:{{ .Values.portal.frontend.image.tag }}
@@ -58,7 +58,7 @@ spec:
             - name: AGENT_SCOPE
               valueFrom:
                 configMapKeyRef:
-                  name: {{ include "litmus-portal.fullname" . }}-admin-config
+                  name: {{ include "cle.fullname" . }}-admin-config
                   key: AGENT_SCOPE
           volumeMounts:
             - name: nginx-config

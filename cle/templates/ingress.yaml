@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled -}}
-{{ $fullName := include "litmus-portal.fullname" . }}
+{{ $fullName := include "cle.fullname" . }}
 {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1
 {{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
@@ -11,8 +11,8 @@ kind: Ingress
 metadata:
   name: {{ .Values.ingress.name }}
   labels:
-    app.kubernetes.io/component: {{ include "litmus-portal.name" . }}-frontend
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "cle.name" . }}-frontend
+    {{- include "cle.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}

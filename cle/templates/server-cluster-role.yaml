@@ -2,10 +2,10 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: argo-cr-for-{{ include "litmus-portal.fullname" . }}-server
+  name: argo-cr-for-{{ include "cle.fullname" . }}-server
   labels:
-    app.kubernetes.io/component: argo-cr-for-{{ include "litmus-portal.name" . }}-server
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: argo-cr-for-{{ include "cle.name" . }}-server
+    {{- include "cle.labels" . | nindent 4 }}
 rules:
 - apiGroups: [""]
   resources: [pods, pods/exec]
@@ -38,10 +38,10 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: litmus-cluster-scope-for-{{ include "litmus-portal.fullname" . }}-server
+  name: litmus-cluster-scope-for-{{ include "cle.fullname" . }}-server
   labels:
-    app.kubernetes.io/component: litmus-cluster-scope-for-{{ include "litmus-portal.fullname" . }}-server
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: litmus-cluster-scope-for-{{ include "cle.fullname" . }}-server
+    {{- include "cle.labels" . | nindent 4 }}
 rules:
   - apiGroups: [""]
     resources: [replicationcontrollers, secrets]
@@ -71,10 +71,10 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: litmus-admin-cr-for-{{ include "litmus-portal.fullname" . }}-server
+  name: litmus-admin-cr-for-{{ include "cle.fullname" . }}-server
   labels:
-    app.kubernetes.io/component: litmus-admin-cr-for-{{ include "litmus-portal.name" . }}-server
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: litmus-admin-cr-for-{{ include "cle.name" . }}-server
+    {{- include "cle.labels" . | nindent 4 }}
 rules:
   # ***************************************************************************************
   # Permissions needed for preparing and monitor the chaos resources by chaos-runner
@@ -178,10 +178,10 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: chaos-cr-for-{{ include "litmus-portal.fullname" . }}-server
+  name: chaos-cr-for-{{ include "cle.fullname" . }}-server
   labels:
-    app.kubernetes.io/component: chaos-cr-for-{{ include "litmus-portal.name" . }}-server
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: chaos-cr-for-{{ include "cle.name" . }}-server
+    {{- include "cle.labels" . | nindent 4 }}
 rules:
   # for managing the pods created by workflow controller to implement individual steps in the workflow
   - apiGroups: [""]
@@ -206,11 +206,11 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: subscriber-cr-for-{{ include "litmus-portal.fullname" . }}-server
+  name: subscriber-cr-for-{{ include "cle.fullname" . }}-server
   namespace: litmus
   labels:
-    app.kubernetes.io/component: subscriber-cr-for-{{ include "litmus-portal.name" . }}-server
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: subscriber-cr-for-{{ include "cle.name" . }}-server
+    {{- include "cle.labels" . | nindent 4 }}
 rules:
 - apiGroups: [""]
   resources: [configmaps]
@@ -237,10 +237,10 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: event-tracker-cr-for-{{ include "litmus-portal.fullname" . }}-server
+  name: event-tracker-cr-for-{{ include "cle.fullname" . }}-server
   labels:
-    app.kubernetes.io/component: event-tracker-cr-for-{{ include "litmus-portal.name" . }}-server
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: event-tracker-cr-for-{{ include "cle.name" . }}-server
+    {{- include "cle.labels" . | nindent 4 }}
 rules:
 - apiGroups: [eventtracker.litmuschaos.io]
   resources: [eventtrackerpolicies]
@@ -255,10 +255,10 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: litmus-server-cr-for-{{ include "litmus-portal.fullname" . }}-server
+  name: litmus-server-cr-for-{{ include "cle.fullname" . }}-server
   labels:
-    app.kubernetes.io/component: litmus-server-cr-for-{{ include "litmus-portal.name" . }}-server
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: litmus-server-cr-for-{{ include "cle.name" . }}-server
+    {{- include "cle.labels" . | nindent 4 }}
 rules:
   - apiGroups: [networking.k8s.io, extensions]
     resources: [ingresses]

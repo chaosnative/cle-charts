@@ -3,11 +3,11 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: litmusportal-frontend-service
+  name: {{ include "cle.fullname" . }}-frontend-service
   namespace:  {{ .Release.Namespace }}
   labels:
-    app.kubernetes.io/component: {{ include "litmus-portal.name" . }}-frontend
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "cle.fullname" . }}-frontend
+    {{- include "cle.labels" . | nindent 4 }}
 spec:
   hosts:
 {{- with .Values.portal.frontend.virtualService.hosts }}

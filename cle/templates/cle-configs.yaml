@@ -1,29 +1,29 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "litmus-portal.fullname" . }}-admin-config
+  name: {{ include "cle.fullname" . }}-admin-config
   namespace:  {{ .Release.Namespace }}
   labels:
-    {{- include "litmus-portal.labels" . | nindent 4 }}
-    app.kubernetes.io/component: {{ include "litmus-portal.name" . }}-admin-config
+    {{- include "cle.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "cle.name" . }}-admin-config
 data:
   AGENT_SCOPE: "{{ .Values.portalScope }}"
   AGENT_NAMESPACE: "{{ .Release.Namespace }}"
   {{- if .Values.adminConfig.DB_SERVER }}
   DB_SERVER: "mongodb://{{ .Values.adminConfig.DB_SERVER }}:{{ .Values.adminConfig.DB_PORT }}"
   {{- else }}
-  DB_SERVER: "mongodb://{{ include "litmus-portal.fullname" . }}-mongo:{{ .Values.adminConfig.DB_PORT }}"
+  DB_SERVER: "mongodb://{{ include "cle.fullname" . }}-mongo:{{ .Values.adminConfig.DB_PORT }}"
   {{- end }}
   VERSION: "{{ .Values.adminConfig.VERSION }}"
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "litmus-portal.fullname" . }}-frontend-nginx-configuration
+  name: {{ include "cle.fullname" . }}-frontend-nginx-configuration
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "litmus-portal.labels" . | nindent 4 }}
-    app.kubernetes.io/component: {{ include "litmus-portal.name" . }}-admin-config
+    {{- include "cle.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "cle.name" . }}-admin-config
 data:
   default.conf: |
     server {
@@ -54,14 +54,14 @@ data:
             proxy_set_header   X-Real-IP            $remote_addr;
             proxy_set_header   X-Forwarded-For      $proxy_add_x_forwarded_for;
             proxy_set_header   X-Forwarded-Proto    $scheme;
-            proxy_pass "http://{{ include "litmus-portal.fullname" . }}-server-service:9003/";
+            proxy_pass "http://{{ include "cle.fullname" . }}-server-service:9003/";
         }
         location /api/ {
             proxy_set_header   Host                 $host;
             proxy_set_header   X-Real-IP            $remote_addr;
             proxy_set_header   X-Forwarded-For      $proxy_add_x_forwarded_for;
             proxy_set_header   X-Forwarded-Proto    $scheme;
-            proxy_pass "http://{{ include "litmus-portal.fullname" . }}-server-service:9002/";
+            proxy_pass "http://{{ include "cle.fullname" . }}-server-service:9002/";
         }
         location /ws/ {
             proxy_set_header   Upgrade              $http_upgrade;
@@ -70,6 +70,6 @@ data:
             proxy_set_header   X-Real-IP            $remote_addr;
             proxy_set_header   X-Forwarded-For      $proxy_add_x_forwarded_for;
             proxy_set_header   X-Forwarded-Proto    $scheme;
-            proxy_pass "http://{{ include "litmus-portal.fullname" . }}-server-service:9002/";
+            proxy_pass "http://{{ include "cle.fullname" . }}-server-service:9002/";
         }
     }

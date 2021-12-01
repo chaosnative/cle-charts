@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "litmus-portal.fullname" . }}-mongo
+  name: {{ include "cle.fullname" . }}-mongo
   namespace:  {{ .Release.Namespace }}
   labels:
     app: mongo
-    app.kubernetes.io/component: {{ include "litmus-portal.name" . }}-database
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "cle.name" . }}-database
+    {{- include "cle.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.mongo.service.type }}
   ports:
@@ -14,4 +14,4 @@ spec:
       port: {{ .Values.mongo.service.port }}
       targetPort: {{ .Values.mongo.service.targetPort }}
   selector:
-    app.kubernetes.io/component: {{ include "litmus-portal.name" . }}-database
+    app.kubernetes.io/component: {{ include "cle.name" . }}-database

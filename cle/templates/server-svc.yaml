@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "litmus-portal.fullname" . }}-server-service
+  name: {{ include "cle.fullname" . }}-server-service
   namespace:  {{ .Release.Namespace }}
   labels:
-    app.kubernetes.io/component: {{ include "litmus-portal.name" . }}-server
-    {{- include "litmus-portal.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ include "cle.name" . }}-server
+    {{- include "cle.labels" . | nindent 4 }}
 spec:
   {{- if .Values.ingress.enabled }}
   type: ClusterIP
@@ -20,4 +20,4 @@ spec:
       port: {{ .Values.portal.server.service.authServer.port }}
       targetPort: {{ .Values.portal.server.service.authServer.targetPort }}
   selector:
-    app.kubernetes.io/component: {{ include "litmus-portal.name" . }}-server
+    app.kubernetes.io/component: {{ include "cle.name" . }}-server

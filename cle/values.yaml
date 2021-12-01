@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-portalScope: namespace
+portalScope: cluster
 
 nameOverride: ""
 
@@ -20,9 +20,10 @@ adminConfig:
   DB_PORT: "27017"
 
 image:
-  imageRegistryName: litmuschaos
+  imageRegistryName: chaosnative
   # Optional pod imagePullSecrets
-  imagePullSecrets: []
+  imagePullSecrets:
+    - name: regcred
 
 ingress:
   enabled: false
@@ -70,7 +71,7 @@ portal:
     ##       maxUnavailable: 25%
     image:
       repository: cle-frontend
-      tag: 2.2.0
+      tag: 2.3.0
       pullPolicy: "Always"
     containerPort: 8080
     customLabels: {}
@@ -140,20 +141,22 @@ portal:
     graphqlServer:
       image:
         repository: cle-server
-        tag: 2.2.0
+        tag: 2.3.0
         pullPolicy: "Always"
       containerPort: 8080
       imageEnv:
-        ARGO_WORKFLOW_CONTROLLER_IMAGE: "workflow-controller:v2.11.0"
-        ARGO_WORKFLOW_EXECUTOR_IMAGE: "argoexec:v2.11.0"
-        LITMUS_CHAOS_OPERATOR_IMAGE: "chaos-operator:2.2.0"
-        LITMUS_CHAOS_RUNNER_IMAGE: "chaos-runner:2.2.0"
-        LITMUS_CHAOS_EXPORTER_IMAGE: "chaos-exporter:2.2.0"
+        ARGO_WORKFLOW_CONTROLLER_IMAGE: "litmuschaos/workflow-controller:v2.11.0"
+        ARGO_WORKFLOW_EXECUTOR_IMAGE: "litmuschaos/argoexec:v2.11.0"
+        LITMUS_CHAOS_OPERATOR_IMAGE: "litmuschaos/chaos-operator:2.3.0"
+        LITMUS_CHAOS_RUNNER_IMAGE: "litmuschaos/chaos-runner:2.3.0"
+        LITMUS_CHAOS_EXPORTER_IMAGE: "litmuschaos/chaos-exporter:2.3.0"
       genericEnv:
         SELF_CLUSTER: "true"
         CONTAINER_RUNTIME_EXECUTOR: "k8sapi"
         HUB_BRANCH_NAME: "v2.2.x"
         AGENT_DEPLOYMENTS: "[\"app=chaos-exporter\", \"name=chaos-operator\", \"app=event-tracker\", \"app=workflow-controller\"]"
+        SUBSCRIBER_IMAGE: "chaosnative/cle-subscriber:2.3.0"
+        EVENT_TRACKER_IMAGE: "chaosnative/cle-event-tracker:2.3.0"
       resources: {}
       # We usually recommend not to specify default resources and to leave this as a conscious
       # choice for the user. This also increases chances charts run on environments with little
@@ -179,7 +182,7 @@ portal:
     authServer:
       image:
         repository: cle-auth-server
-        tag: 2.2.0
+        tag: 2.3.0
         pullPolicy: "Always"
       containerPort: 3000
       env:
