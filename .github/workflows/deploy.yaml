@@ -31,7 +31,7 @@ jobs:
         run: helm plugin install https://github.com/hypnoglow/helm-s3.git --version v0.10.0
 
       - name: Adding helm repo
-        run: helm repo add chaosnative s3://charts.chaosnative.com
+        run: helm repo add chaosnative s3://chaosnative-charts
 
       - name: Package helm
         run: helm package cle
