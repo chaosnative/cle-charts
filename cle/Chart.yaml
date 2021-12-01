@@ -1,0 +1,17 @@
+apiVersion: v1
+appVersion: "0.1.0"
+description: A Helm chart to install ChaosNative Litmus Enterprise
+name: cle-charts
+version: 0.1.0
+kubeVersion: ">=1.16.0-0"
+home: https://chaosnative.com
+sources:
+  - https://github.com/chaosnative/cle
+keywords:
+  - chaos-engineering
+  - resiliency
+  - kubernetes
+maintainers:
+  - name: Raj Babu Das
+    email: raj@chaosnative.com
+icon: https://raw.githubusercontent.com/litmuschaos/icons/master/litmus.png
