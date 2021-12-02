@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: license-server
+  namespace:  {{ .Release.Namespace }}
+  labels:
+    component: license-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: license-server
+  template:
+    metadata:
+      labels:
+        component: license-server
+    spec:
+      {{- with .Values.image.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        - name: wait-for-mongodb
+          image: litmuschaos/{{ .Values.portal.server.waitForMongodb.image.repository }}:{{ .Values.portal.server.waitForMongodb.image.tag }}
+          imagePullPolicy: {{ .Values.portal.server.waitForMongodb.image.pullPolicy }}
+          command: ["/bin/sh", "-c"]
+          args:
+            [
+                "while [[ $(curl -sw '%{http_code}' http://{{ include "cle.fullname" . }}-mongo:{{ .Values.adminConfig.DB_PORT }} -o /dev/null) -ne 200 ]]; do sleep 5; echo 'Waiting for the MongoDB to be ready...'; done; echo 'Connection with MongoDB established'",
+                                                                                           ]
+      containers:
+        - name: license-server
+          image: {{ .Values.image.imageRegistryName }}/{{ .Values.portal.server.licenseServer.image.repository }}:{{ .Values.portal.server.licenseServer.image.tag }}
+          envFrom:
+            - secretRef:
+                name: {{ include "cle.fullname" . }}-admin-secret
+            - configMapRef:
+                name: {{ include "cle.fullname" . }}-admin-config
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          ports:
+            - containerPort: {{ .Values.portal.server.licenseServer.containerPort }}
+          imagePullPolicy: Always
+      serviceAccountName: {{ .Values.portal.server.serviceAccountName }}

@@ -138,6 +138,18 @@ portal:
         tag: latest
         pullPolicy: "Always"
 
+
+    licenseServer:
+      image:
+        repository: cle-license-module
+        tag: 2.3.0
+        pullPolicy: "Always"
+      containerPort: 8080
+      service:
+        type: ClusterIP
+        port: 80
+        targetPort: 8080
+
     graphqlServer:
       image:
         repository: cle-server

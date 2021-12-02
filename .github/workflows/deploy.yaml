@@ -24,9 +24,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Debug
-        run: aws s3 ls
-
       - name: Install helm s3 plugin
         run: helm plugin install https://github.com/hypnoglow/helm-s3.git --version v0.10.0
 
