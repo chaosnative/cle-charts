@@ -645,9 +645,9 @@ spec:
             - name: PORTAL_SCOPE
               value: "cluster"
             - name: SUBSCRIBER_IMAGE
-              value: "litmuschaos/litmusportal-subscriber:2.3.0"
+              value: "chaosnative/cle-subscriber:2.3.0"
             - name: EVENT_TRACKER_IMAGE
-              value: "litmuschaos/litmusportal-event-tracker:2.3.0"
+              value: "chaosnative/cle-event-tracker:2.3.0"
             - name: ARGO_WORKFLOW_CONTROLLER_IMAGE
               value: "litmuschaos/workflow-controller:v2.11.0"
             - name: ARGO_WORKFLOW_EXECUTOR_IMAGE
