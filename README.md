@@ -55,7 +55,7 @@ Visit https://chaosnative.com to find more info.
 ```
 
 
-#### Step-3: Uninstall the litmus chaoscenter
+#### Step-3: Uninstall the ChaosNative Litmus Enterprise
 
 ```bash
 helm uninstall chaosnative --namespace=litmus
