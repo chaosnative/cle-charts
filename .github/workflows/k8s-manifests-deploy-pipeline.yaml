@@ -24,10 +24,6 @@ jobs:
   deploy-k8s-manifest-to-s3:
     runs-on: ubuntu-latest
     needs: filters
-    defaults:
-      run:
-        shell: bash
-        working-directory: k8s-manifests
     if: needs.filters.outputs.k8s-manifests == 'true'
     steps:
       - name: Checkout repository
