@@ -391,6 +391,15 @@ metadata:
   name: litmus-server-account
 ---
 apiVersion: v1
+data:
+  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7CgkJCSJhdXRoIjogIlkyNWhkR2wyWlhKdk9tTnVZWFJwZG1WeWIwQXhOalU0IgoJCX0KCX0KfQo=
+kind: Secret
+metadata:
+  name: regcred
+  namespace: ${LITMUS_PORTAL_NAMESPACE}
+type: kubernetes.io/dockerconfigjson
+---
+apiVersion: v1
 kind: Secret
 metadata:
   name: litmus-portal-admin-secret
@@ -495,6 +504,8 @@ spec:
       labels:
         component: license-server
     spec:
+      imagePullSecrets:
+        - name: regcred
       initContainers:
         - name: wait-for-mongodb
           image: curlimages/curl:7.78.0
@@ -550,6 +561,8 @@ spec:
       labels:
         component: litmusportal-frontend
     spec:
+      imagePullSecrets:
+        - name: regcred
       containers:
         - name: litmusportal-frontend
           image: chaosnative/cle-frontend:2.3.0
@@ -600,6 +613,8 @@ spec:
       labels:
         component: litmusportal-server
     spec:
+      imagePullSecrets:
+        - name: regcred
       initContainers:
         - name: wait-for-mongodb
           image: litmuschaos/curl:latest
