@@ -1,5 +1,6 @@
-
 # Helm Charts ChaosNative Litmus Enterprise
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fchaosnative%2Fcle-charts.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fchaosnative%2Fcle-charts?ref=badge_shield)
+
 
 ## Usage
 
@@ -67,3 +68,7 @@ release "chaosnative" uninstalled
 ```
 
 ---
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fchaosnative%2Fcle-charts.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fchaosnative%2Fcle-charts?ref=badge_large)
