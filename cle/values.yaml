@@ -77,17 +77,19 @@ portal:
     customLabels: {}
     # my.company.com/tier: "frontend"
 
-    resources: {}
+    resources: 
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 200m
-    #   memory: 400Mi
-    # requests:
-    #   cpu: 200m
-    #   memory: 400Mi
+      limits:
+        cpu: 25m
+        memory: 300Mi
+        ephemeral-storage: "1Gi"
+      requests:
+        cpu: 25m
+        memory: 300Mi
+        ephemeral-storage: "500Mi"
     livenessProbe:
       failureThreshold: 5
       initialDelaySeconds: 30
@@ -145,6 +147,17 @@ portal:
         tag: 2.3.0
         pullPolicy: "Always"
       containerPort: 8080
+      resources: 
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+        limits:
+          cpu: 25m
+          memory: 300Mi
+        requests:
+          cpu: 25m
+          memory: 300Mi
       service:
         type: ClusterIP
         port: 80
@@ -169,17 +182,17 @@ portal:
         AGENT_DEPLOYMENTS: "[\"app=chaos-exporter\", \"name=chaos-operator\", \"app=event-tracker\", \"app=workflow-controller\"]"
         SUBSCRIBER_IMAGE: "chaosnative/cle-subscriber:2.3.0"
         EVENT_TRACKER_IMAGE: "chaosnative/cle-event-tracker:2.3.0"
-      resources: {}
+      resources: 
       # We usually recommend not to specify default resources and to leave this as a conscious
       # choice for the user. This also increases chances charts run on environments with little
       # resources, such as Minikube. If you do want to specify resources, uncomment the following
       # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-      # limits:
-      #   cpu: 200m
-      #   memory: 400Mi
-      # requests:
-      #   cpu: 200m
-      #   memory: 400Mi
+        limits:
+          cpu: 25m
+          memory: 350Mi
+        requests:
+          cpu: 25m
+          memory: 350Mi
       livenessProbe:
         failureThreshold: 5
         initialDelaySeconds: 30
@@ -200,17 +213,17 @@ portal:
       env:
         ADMIN_USERNAME: "admin"
         ADMIN_PASSWORD: "litmus"
-      resources: {}
+      resources: 
       # We usually recommend not to specify default resources and to leave this as a conscious
       # choice for the user. This also increases chances charts run on environments with little
       # resources, such as Minikube. If you do want to specify resources, uncomment the following
       # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-      # limits:
-      #   cpu: 200m
-      #   memory: 250Mi
-      # requests:
-      #   cpu: 200m
-      #   memory: 250Mi
+        limits:
+          cpu: 25m
+          memory: 150Mi
+        requests:
+          cpu: 25m
+          memory: 150Mi
     service:
       type: NodePort
       graphqlServer:
@@ -232,17 +245,17 @@ mongo:
     tag: 4.2.8
     pullPolicy: "Always"
   containerPort: 27017
-  resources: {}
+  resources: 
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 200m
-  #   memory: 400Mi
-  # requests:
-  #   cpu: 200m
-  #   memory: 400Mi
+    limits:
+      cpu: 500m
+      memory: 5Gi
+    requests:
+      cpu: 250m
+      memory: 500Mi
   livenessProbe:
     failureThreshold: 5
     initialDelaySeconds: 30
