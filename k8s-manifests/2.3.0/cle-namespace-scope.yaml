@@ -534,8 +534,8 @@ spec:
               memory: "300Mi"
               cpu: "25m"
             limits:
-              memory: "300Mi"
-              cpu: "25m"
+              memory: "512Mi"
+              cpu: "250m"
       serviceAccountName: litmus-server-account
 ---
 apiVersion: v1
@@ -586,8 +586,8 @@ spec:
               cpu: "25m"
               ephemeral-storage: "500Mi"
             limits:
-              memory: "300Mi" 
-              cpu: "25m"
+              memory: "512Mi" 
+              cpu: "250m"
               ephemeral-storage: "1Gi"
           volumeMounts:
             - name: nginx-config
@@ -682,10 +682,10 @@ spec:
           resources:
             requests:
               memory: "350Mi"
-              cpu: "25m"
+              cpu: "125m"
             limits:
-              memory: "350Mi"
-              cpu: "25m"
+              memory: "1Gi"
+              cpu: "512m"
         - name: auth-server
           image: chaosnative/cle-auth-server:2.3.0
           envFrom:
@@ -705,8 +705,8 @@ spec:
               memory: "150Mi"
               cpu: "25m"
             limits:
-              memory: "150Mi"
-              cpu: "25m"
+              memory: "512Mi"
+              cpu: "250m"
           ports:
             - containerPort: 3000
           imagePullPolicy: Always
@@ -768,7 +768,7 @@ spec:
           resources:
             requests:
               memory: "250Mi"
-              cpu: "75m"
+              cpu: "125m"
             limits:
               memory: "500Mi"
               cpu: "250m"
