@@ -14,7 +14,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: {{ include "cle.name" . }}-database
-  serviceName: mongo
+  serviceName: {{ include "cle.fullname" . }}-headless-mongo
   replicas: {{ .Values.mongo.replicas }}
   template:
     metadata:
