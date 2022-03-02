@@ -530,6 +530,15 @@ spec:
             [
                 "while [[ $(curl -sw '%{http_code}' http://mongo-service:27017 -o /dev/null) -ne 200 ]]; do sleep 5; echo 'Waiting for the MongoDB to be ready...'; done; echo 'Connection with MongoDB established'",
             ]
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "25m"
+              ephemeral-storage: "100Mi"
+            limits:
+              memory: "200Mi" 
+              cpu: "75m"
+              ephemeral-storage: "200Mi"
       containers:
         - name: license-server
           image: chaosnative/cle-license-module:2.3.0
@@ -550,9 +559,11 @@ spec:
             requests:
               memory: "300Mi"
               cpu: "25m"
+              ephemeral-storage: "500Mi"
             limits:
               memory: "512Mi"
               cpu: "250m"
+              ephemeral-storage: "1Gi"
       serviceAccountName: litmus-server-account
 ---
 apiVersion: v1
@@ -658,6 +669,15 @@ spec:
             [
               "while [[ $(curl -sw '%{http_code}' http://mongo-service:27017 -o /dev/null) -ne 200 ]]; do sleep 5; echo 'Waiting for the MongoDB to be ready...'; done; echo 'Connection with MongoDB established'",
             ]
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "25m"
+              ephemeral-storage: "100Mi"
+            limits:
+              memory: "200Mi"
+              cpu: "75m"
+              ephemeral-storage: "200Mi"
       containers:
         - name: graphql-server
           image: chaosnative/cle-server:2.3.0
@@ -712,9 +732,11 @@ spec:
             requests:
               memory: "350Mi"
               cpu: "250m"
+              ephemeral-storage: "500Mi"
             limits:
               memory: "1Gi"
               cpu: "512m"
+              ephemeral-storage: "1Gi"
         - name: auth-server
           image: chaosnative/cle-auth-server:2.3.0
           envFrom:
@@ -736,9 +758,11 @@ spec:
             requests:
               memory: "150Mi"
               cpu: "25m"
+              ephemeral-storage: "500Mi"
             limits:
               memory: "512Mi"
               cpu: "250m"
+              ephemeral-storage: "1Gi"
       serviceAccountName: litmus-server-account
 ---
 apiVersion: v1
@@ -800,9 +824,11 @@ spec:
             requests:
               memory: "250Mi"
               cpu: "125m"
+              ephemeral-storage: "500Mi"
             limits:
               memory: "500Mi"
               cpu: "512m"
+              ephemeral-storage: "1Gi"
   volumeClaimTemplates:
     - metadata:
         name: mongo-persistent-storage
