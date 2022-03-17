@@ -235,9 +235,12 @@ rules:
 
   # for tracking & getting logs of the pods created by workflow controller to implement individual steps in the workflow
   - apiGroups: [""]
-    resources: [pods/log, secrets, configmaps]
+    resources: [pods/log]
     verbs: [get, watch, create, patch]
 
+  - apiGroups: [""]
+    resources: [secrets, configmaps]
+    verbs: [get, watch,patch]
   # for creation & deletion of application in predefined workflows
   - apiGroups: [apps]
     resources: [deployments, statefulsets]
