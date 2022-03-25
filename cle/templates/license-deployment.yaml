@@ -46,6 +46,8 @@ spec:
           ports:
             - containerPort: {{ .Values.portal.server.licenseServer.containerPort }}
           imagePullPolicy: Always
+          securityContext:
+            {{- toYaml .Values.portal.server.graphqlServer.securityContext | nindent 12 }}
           resources:
             {{- toYaml .Values.portal.server.licenseServer.resources | nindent 12 }}
       serviceAccountName: {{ .Values.portal.server.serviceAccountName }}

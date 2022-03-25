@@ -6,6 +6,10 @@ metadata:
   labels:
     app.kubernetes.io/component: {{ include "cle.name" . }}-server
     {{- include "cle.labels" . | nindent 4 }}
+  {{- with .Values.portal.server.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   {{- if .Values.ingress.enabled }}
   type: ClusterIP
@@ -16,8 +20,8 @@ spec:
     - name: graphql-server
       port: {{ .Values.portal.server.service.graphqlServer.port }}
       targetPort: {{ .Values.portal.server.service.graphqlServer.targetPort }}
-    - name: auth-server
-      port: {{ .Values.portal.server.service.authServer.port }}
-      targetPort: {{ .Values.portal.server.service.authServer.targetPort }}
+    - name: graphql-rpc-server
+      port: {{ .Values.portal.server.service.graphqlRpcServer.port }}
+      targetPort: {{ .Values.portal.server.service.graphqlRpcServer.targetPort }}
   selector:
     app.kubernetes.io/component: {{ include "cle.name" . }}-server
