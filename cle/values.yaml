@@ -160,9 +160,14 @@ portal:
     licenseServer:
       image:
         repository: cle-license-module
-        tag: 2.3.0
+        tag: 2.7.0
         pullPolicy: "Always"
       containerPort: 8080
+      securityContext:
+        runAsUser: 2000
+        allowPrivilegeEscalation: false
+        runAsNonRoot: true
+        readOnlyRootFilesystem: true
       resources: 
       # We usually recommend not to specify default resources and to leave this as a conscious
       # choice for the user. This also increases chances charts run on environments with little

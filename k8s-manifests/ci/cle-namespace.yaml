@@ -538,6 +538,11 @@ spec:
           ports:
             - containerPort: 8080
           imagePullPolicy: Always
+          securityContext:
+            runAsUser: 2000
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            readOnlyRootFilesystem: true
           resources:
             requests:
               memory: "300Mi"
@@ -642,7 +647,7 @@ spec:
         - name: regcred
       initContainers:
         - name: wait-for-mongodb
-          image: litmuschaos/curl:2.6.0
+          image: litmuschaos/curl:latest
           command: ["/bin/sh", "-c"]
           args:
             [
@@ -770,7 +775,7 @@ spec:
       automountServiceAccountToken: false
       initContainers:
         - name: wait-for-mongodb
-          image: litmuschaos/curl:2.6.0
+          image: litmuschaos/curl:latest
           command: ["/bin/sh", "-c"]
           args:
             [
