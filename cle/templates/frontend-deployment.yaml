@@ -27,10 +27,11 @@ spec:
           {{ toYaml .Values.portal.frontend.customLabels | nindent 8 }}
         {{- end }}
     spec:
-    {{- with .Values.image.imagePullSecrets }}
+      automountServiceAccountToken: {{ .Values.portal.frontend.automountServiceAccountToken }}
+      {{- if .Values.image.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+        {{ toYaml .Values.image.imagePullSecrets | indent 8 }}
+      {{- end }}
       volumes:
         - name: nginx-config
           configMap:
@@ -41,6 +42,8 @@ spec:
           imagePullPolicy: {{ .Values.portal.frontend.image.pullPolicy }}
           resources:
             {{- toYaml .Values.portal.frontend.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.portal.frontend.securityContext | nindent 12 }}
           livenessProbe:
             httpGet:
               path: /

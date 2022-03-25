@@ -28,13 +28,15 @@ spec:
         {{- end }}
     spec:
       serviceAccountName: {{ .Values.portal.server.serviceAccountName }}
-    {{- with .Values.image.imagePullSecrets }}
+      {{- if .Values.image.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+        {{ toYaml .Values.image.imagePullSecrets | indent 8 }}
+      {{- end }}
+      volumes:
+        {{- toYaml .Values.portal.server.graphqlServer.volumes | default "" | nindent 8 }}
       initContainers:
         - name: wait-for-mongodb
-          image: litmuschaos/{{ .Values.portal.server.waitForMongodb.image.repository }}:{{ .Values.portal.server.waitForMongodb.image.tag }}
+          image: {{ .Values.image.imageRegistryName }}/{{ .Values.portal.server.waitForMongodb.image.repository }}:{{ .Values.portal.server.waitForMongodb.image.tag }}
           imagePullPolicy: {{ .Values.portal.server.waitForMongodb.image.pullPolicy }}
           command: ["/bin/sh", "-c"]
           args:
@@ -43,55 +45,27 @@ spec:
             ]
           resources:
             {{- toYaml .Values.portal.server.waitForMongodb.resources | nindent 12 }}
-        - name: server-version-updater
-          image: litmuschaos/{{ .Values.portal.server.serverVersionUpdater.image.repository }}:{{ .Values.portal.server.serverVersionUpdater.image.tag }}
-          imagePullPolicy: {{ .Values.portal.server.serverVersionUpdater.image.pullPolicy }}
-          command: ["/bin/sh", "-c"]
-          args:
-            [
-              "mongo $DB_SERVER --username $DB_USER --password $DB_PASSWORD --eval 'db=db.getSiblingDB(\"litmus\");db.getCollection(\"server-config-collection\").updateOne({\"key\":\"version\"},{ \"$set\":{ \"value\":\"'$VERSION'\"}})'"
-            ]
-          env:
-            - name: VERSION
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "cle.fullname" . }}-admin-config
-                  key: VERSION
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "cle.fullname" . }}-admin-secret
-                  key: DB_USER
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "cle.fullname" . }}-admin-secret
-                  key: DB_PASSWORD
-            - name: DB_SERVER
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "cle.fullname" . }}-admin-config
-                  key: DB_SERVER   
-          resources:
-            {{- toYaml .Values.portal.server.serverVersionUpdater.resources | nindent 12 }}
       containers:
         - name: graphql-server
           image: {{ .Values.image.imageRegistryName }}/{{ .Values.portal.server.graphqlServer.image.repository }}:{{ .Values.portal.server.graphqlServer.image.tag }}
+          volumeMounts:
+            {{- toYaml .Values.portal.server.graphqlServer.volumeMounts | default "" | nindent 12 }}
           imagePullPolicy: {{ .Values.portal.server.graphqlServer.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.portal.server.graphqlServer.containerPort }}
-              name: graphql-server
+            {{- toYaml .Values.portal.server.graphqlServer.ports | nindent 12 }}
           resources:
             {{- toYaml .Values.portal.server.graphqlServer.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.portal.server.graphqlServer.securityContext | nindent 12 }}
           livenessProbe:
             httpGet:
               path: /
-              port: graphql-server
+              port: gql-server
             {{- toYaml .Values.portal.server.graphqlServer.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /
-              port: graphql-server
+              port: gql-server
             {{- toYaml .Values.portal.server.graphqlServer.readinessProbe | nindent 12 }}
           envFrom:
             - secretRef:
@@ -115,6 +89,8 @@ spec:
               value: "{{ .Values.ingress.enabled }}"
             - name: INGRESS_NAME
               value: "{{ .Values.ingress.name }}"
+            - name: "LITMUS_AUTH_GRPC_ENDPOINT"
+              value: "{{ include "cle.fullname" . }}-auth-server-service"
             - name: NODE_NAME
               valueFrom:
                 fieldRef:
@@ -124,24 +100,6 @@ spec:
               value: {{ $val }}
             {{- end }}
             {{- range $key, $val := .Values.portal.server.graphqlServer.genericEnv }}
-            - name: {{ $key }}
-              value: {{ $val | quote }}
-            {{- end }}
-        - name: auth-server
-          image: {{ .Values.image.imageRegistryName }}/{{ .Values.portal.server.authServer.image.repository }}:{{ .Values.portal.server.authServer.image.tag }}
-          imagePullPolicy: {{ .Values.portal.server.authServer.image.pullPolicy }}
-          ports:
-            - containerPort: {{ .Values.portal.server.authServer.containerPort }}
-              name: auth-server
-          resources:
-            {{- toYaml .Values.portal.server.authServer.resources | nindent 12 }}
-          envFrom:
-            - secretRef:
-                name: {{ include "cle.fullname" . }}-admin-secret
-            - configMapRef:
-                name: {{ include "cle.fullname" . }}-admin-config
-          env:
-            {{- range $key, $val := .Values.portal.server.authServer.env }}
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end }}
