@@ -1,6 +1,6 @@
 # cle
 
-![Version: 0.2.7](https://img.shields.io/badge/Version-0.2.7-informational?style=flat-square) ![AppVersion: 0.2.7](https://img.shields.io/badge/AppVersion-0.2.7-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![AppVersion: 0.2.0](https://img.shields.io/badge/AppVersion-0.2.0-informational?style=flat-square)
 
 A Helm chart to install ChaosNative Litmus Enterprise
 
@@ -146,12 +146,12 @@ Kubernetes: `>=1.16.0-0`
 | portal.server.graphqlServer.image.pullPolicy | string | `"Always"` |  |
 | portal.server.graphqlServer.image.repository | string | `"cle-server"` |  |
 | portal.server.graphqlServer.image.tag | string | `"2.7.0"` |  |
-| portal.server.graphqlServer.imageEnv.ARGO_WORKFLOW_CONTROLLER_IMAGE | string | `"litmuschaos/workflow-controller:v3.2.3"` |  |
-| portal.server.graphqlServer.imageEnv.ARGO_WORKFLOW_EXECUTOR_IMAGE | string | `"litmuschaos/argoexec:v3.2.3"` |  |
+| portal.server.graphqlServer.imageEnv.ARGO_WORKFLOW_CONTROLLER_IMAGE | string | `"chaosnative/workflow-controller:v3.2.3"` |  |
+| portal.server.graphqlServer.imageEnv.ARGO_WORKFLOW_EXECUTOR_IMAGE | string | `"chaosnative/argoexec:v3.2.3"` |  |
 | portal.server.graphqlServer.imageEnv.EVENT_TRACKER_IMAGE | string | `"chaosnative/cle-event-tracker:2.7.0"` |  |
-| portal.server.graphqlServer.imageEnv.LITMUS_CHAOS_EXPORTER_IMAGE | string | `"litmuschaos/chaos-exporter:2.6.0"` |  |
-| portal.server.graphqlServer.imageEnv.LITMUS_CHAOS_OPERATOR_IMAGE | string | `"litmuschaos/chaos-operator:2.6.0"` |  |
-| portal.server.graphqlServer.imageEnv.LITMUS_CHAOS_RUNNER_IMAGE | string | `"litmuschaos/chaos-runner:2.6.0"` |  |
+| portal.server.graphqlServer.imageEnv.LITMUS_CHAOS_EXPORTER_IMAGE | string | `"chaosnative/chaos-exporter:2.6.0"` |  |
+| portal.server.graphqlServer.imageEnv.LITMUS_CHAOS_OPERATOR_IMAGE | string | `"chaosnative/chaos-operator:2.6.0"` |  |
+| portal.server.graphqlServer.imageEnv.LITMUS_CHAOS_RUNNER_IMAGE | string | `"chaosnative/chaos-runner:2.6.0"` |  |
 | portal.server.graphqlServer.imageEnv.SUBSCRIBER_IMAGE | string | `"chaosnative/cle-subscriber:2.7.0"` |  |
 | portal.server.graphqlServer.livenessProbe.failureThreshold | int | `5` |  |
 | portal.server.graphqlServer.livenessProbe.initialDelaySeconds | int | `30` |  |

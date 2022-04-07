@@ -36,7 +36,7 @@ spec:
       {{- end }}
       containers:
         - name: mongo
-          image: litmuschaos/{{ .Values.mongo.image.repository }}:{{ .Values.mongo.image.tag }}
+          image: {{ .Values.image.imageRegistryName }}/{{ .Values.mongo.image.repository }}:{{ .Values.mongo.image.tag }}
           ports:
             - containerPort: {{ .Values.mongo.containerPort }}
               name: mongodb
