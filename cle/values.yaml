@@ -213,11 +213,11 @@ portal:
       imageEnv:
         SUBSCRIBER_IMAGE: "chaosnative/cle-subscriber:2.7.0"
         EVENT_TRACKER_IMAGE: "chaosnative/cle-event-tracker:2.7.0"
-        ARGO_WORKFLOW_CONTROLLER_IMAGE: "litmuschaos/workflow-controller:v3.2.3"
-        ARGO_WORKFLOW_EXECUTOR_IMAGE: "litmuschaos/argoexec:v3.2.3"
-        LITMUS_CHAOS_OPERATOR_IMAGE: "litmuschaos/chaos-operator:2.6.0"
-        LITMUS_CHAOS_RUNNER_IMAGE: "litmuschaos/chaos-runner:2.6.0"
-        LITMUS_CHAOS_EXPORTER_IMAGE: "litmuschaos/chaos-exporter:2.6.0"
+        ARGO_WORKFLOW_CONTROLLER_IMAGE: "chaosnative/workflow-controller:v3.2.3"
+        ARGO_WORKFLOW_EXECUTOR_IMAGE: "chaosnative/argoexec:v3.2.3"
+        LITMUS_CHAOS_OPERATOR_IMAGE: "chaosnative/chaos-operator:2.6.0"
+        LITMUS_CHAOS_RUNNER_IMAGE: "chaosnative/chaos-runner:2.6.0"
+        LITMUS_CHAOS_EXPORTER_IMAGE: "chaosnative/chaos-exporter:2.6.0"
       genericEnv:
         TLS_SECRET_NAME: ""
         TLS_CERT_64: ""
